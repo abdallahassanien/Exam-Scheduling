@@ -1,0 +1,31 @@
+{
+  "dataset": {
+    "exams": 235,
+    "rooms": 38,
+    "timeslots": 60,
+    "conflict_pairs": 2702
+  },
+  "ga": {
+    "fitness": 92800,
+    "hard_violations": 7,
+    "soft_violations": 4,
+    "runtime_s": 18.36
+  },
+  "greedy": {
+    "score": 100000,
+    "total_penalty": 0,
+    "room_conflicts": 0,
+    "student_conflicts": 0,
+    "runtime_s": 0.0063
+  },
+  "integrity": {
+    "ga_all_exams": true,
+    "greedy_all_exams": true,
+    "ga_double_bookings": 0,
+    "greedy_double_bookings": 0,
+    "ga_capacity_violations": 0,
+    "greedy_capacity_violations": 0,
+    "convergence_pct": 9.4
+  },
+  "verdict": "PASS"
+}

@@ -3,3 +3,9 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+node_modules/
+.next/
+backend/storage/simulations/
+backend/storage/uploads/
+backend/storage/*.log
+*.log

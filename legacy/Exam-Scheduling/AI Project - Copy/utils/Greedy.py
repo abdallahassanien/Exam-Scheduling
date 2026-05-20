@@ -1,6 +1,7 @@
 import time
 import json
 import csv
+import matplotlib.pyplot as plt
 from collections import defaultdict
 
 
@@ -176,7 +177,6 @@ def plot_convergence(history):
     """
     Plot GA fitness improvement over generations.
     """
-    import matplotlib.pyplot as plt
 
     plt.figure(figsize=(10, 5))
     plt.plot(history)
