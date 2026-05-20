@@ -6,9 +6,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import type { AlgorithmResult } from "@/lib/types";
 
+const INSTRUCTOR_KEYWORDS = ["instructor", " teacher ", " faculty "];
+
+function hasInstructor(text: string): boolean {
+  const lower = text.toLowerCase();
+  return INSTRUCTOR_KEYWORDS.some((kw) => lower.includes(kw));
+}
+
 export function ConstraintMonitor({ result }: { result?: AlgorithmResult | null }) {
-  const constraints = result?.constraints?.items ?? [];
-  const reasons = result?.constraints?.conflict_reasons ?? [];
+  const constraints = (result?.constraints?.items ?? []).filter(
+    (item) => !hasInstructor(item.name) && !hasInstructor(item.description)
+  );
+  const reasons = (result?.constraints?.conflict_reasons ?? []).filter(
+    (r) => !hasInstructor(r.type) && !hasInstructor(r.message)
+  );
   return (
     <Card id="constraints">
       <CardHeader>
