@@ -274,18 +274,18 @@ class StudentScheduleService:
                 self._schedule_cache[cache_key] = rows
                 return rows
 
-        csv_path = self.output_dir / f"{algorithm}_schedule.csv"
-        if csv_path.exists():
-            import pandas as pd
-            df = pd.read_csv(csv_path).fillna("")
-            rows = df.to_dict(orient="records")
-            self._schedule_cache[cache_key] = rows
-            return rows
-
         csv_path2 = ROOT_DIR / "backend" / "storage" / "exports" / f"{algorithm}_latest_schedule.csv"
         if csv_path2.exists():
             import pandas as pd
             df = pd.read_csv(csv_path2).fillna("")
+            rows = df.to_dict(orient="records")
+            self._schedule_cache[cache_key] = rows
+            return rows
+
+        csv_path = self.output_dir / f"{algorithm}_schedule.csv"
+        if csv_path.exists():
+            import pandas as pd
+            df = pd.read_csv(csv_path).fillna("")
             rows = df.to_dict(orient="records")
             self._schedule_cache[cache_key] = rows
             return rows

@@ -264,12 +264,31 @@ class SchedulerService:
         if algorithm == "greedy":
             return self.run_greedy()
 
-        existing = self.output_dir / "ga_schedule.csv"
+        # Check API-exported schedule first (most recent)
+        export_path = self.export_dir / f"{algorithm}_latest_schedule.csv"
+        if export_path.exists():
+            rows = pd.read_csv(export_path).fillna("").to_dict(orient="records")
+            exams, rooms, timeslots, conflict_matrix = self.load_inputs()
+            compact = [{"exam": r["exam"], "room_id": r.get("room_id", r.get("room", "")), "slot_id": int(r.get("slot_id", 0))} for r in rows]
+            metrics = self._metrics_from_schedule(algorithm, compact, exams, rooms, timeslots, conflict_matrix, 0, rows=rows)
+            constraints = self.constraint_summary(compact, exams, rooms, timeslots, conflict_matrix, rows=rows)
+            analytics = self.analytics_from_rows(rows, metrics, [])
+            return {
+                "algorithm": algorithm,
+                "metrics": metrics,
+                "schedule": rows,
+                "constraints": constraints,
+                "analytics": analytics,
+                "history": [],
+            }
+
+        # Legacy fallback: outputs/ directory
+        existing = self.output_dir / f"{algorithm}_schedule.csv"
         if existing.exists():
             rows = pd.read_csv(existing).fillna("").to_dict(orient="records")
-            metrics = self._metrics_from_export_rows("ga", rows)
+            metrics = self._metrics_from_export_rows(algorithm, rows)
             return {
-                "algorithm": "ga",
+                "algorithm": algorithm,
                 "metrics": metrics,
                 "schedule": rows,
                 "constraints": {"items": [], "overall_satisfaction": 0, "conflict_reasons": []},
