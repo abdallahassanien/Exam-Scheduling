@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Activity, AlertTriangle, BarChart3, CalendarCheck2, Database, Gauge, UsersRound, type LucideIcon } from "lucide-react";
 import { AlgorithmControls } from "@/components/AlgorithmControls";
@@ -29,6 +30,7 @@ const defaultParams: GAParameters = {
 };
 
 export default function Home() {
+  const router = useRouter();
   const [summary, setSummary] = useState<DatasetSummary | null>(null);
   const [ga, setGa] = useState<AlgorithmResult | null>(null);
   const [greedy, setGreedy] = useState<AlgorithmResult | null>(null);
@@ -170,7 +172,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <Toast toast={toast} />
-      <LandingHero summary={summary} onLaunch={() => navigate("dashboard")} />
+      <LandingHero summary={summary} onLaunch={() => router.push("/dashboard")} />
       <div className="flex border-t border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_34%),#050713]">
         <AppShell active={active} onNavigate={navigate} />
         <div className="min-w-0 flex-1">
