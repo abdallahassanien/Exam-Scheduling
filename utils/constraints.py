@@ -13,10 +13,10 @@ def no_room_double_booking(schedule):
     """
     violations = 0
     
-    # Create a record to track which rooms are busy at which times
+    # create a record to track which rooms are busy at which times
     seen = {}  
 
-    # Go through every exam assignment in the schedule one by one
+    # go through every exam assignment in the schedule one by one
     for assignment in schedule:
         # Create a unique pair of the Room and the Time Slot
         key = (assignment['room_id'], assignment['slot_id'])

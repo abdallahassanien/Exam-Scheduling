@@ -1,6 +1,6 @@
 """
 data_loader.py
---------------
+----------------------
 Loads and cleans all CSV files into Python objects that the rest
 of the project can use. Import this file in any notebook like this:
 
